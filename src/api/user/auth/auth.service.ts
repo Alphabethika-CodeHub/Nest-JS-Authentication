@@ -15,6 +15,7 @@ export class AuthService {
 
   public async register(body: RegisterDto): Promise<User | never> {
     const { name, email, password }: RegisterDto = body;
+
     let user: User = await this.repository.findOne({ where: { email } });
 
     if (user) {
@@ -22,7 +23,6 @@ export class AuthService {
     }
 
     user = new User();
-
     user.name = name;
     user.email = email;
     user.password = this.helper.encodePassword(password);
@@ -30,7 +30,7 @@ export class AuthService {
     return this.repository.save(user);
   }
 
-  public async login(body: LoginDto): Promise<string | never> {
+  public async login(body: LoginDto): Promise<object | never> {
     const { email, password }: LoginDto = body;
     const user: User = await this.repository.findOne({ where: { email } });
 
@@ -49,7 +49,10 @@ export class AuthService {
 
     this.repository.update(user.id, { lastLoginAt: new Date() });
 
-    return this.helper.generateToken(user);
+    return {
+      id: user.id,
+      token: this.helper.generateToken(user),
+    };
   }
 
   public async refresh(user: User): Promise<string> {

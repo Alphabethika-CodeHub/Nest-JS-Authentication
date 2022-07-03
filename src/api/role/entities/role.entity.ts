@@ -1,43 +1,23 @@
-import { Role } from '@/api/role/entities/role.entity';
-import { Exclude } from 'class-transformer';
 import {
   BaseEntity,
   Column,
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
-  ManyToOne,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
 
 @Entity()
-export class User extends BaseEntity {
+export class Role extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
-  public id!: string;
-
-  @Column({ type: 'varchar' })
-  public email!: string;
-
-  @Exclude()
-  @Column({ type: 'varchar' })
-  public password!: string;
+  public id: string;
 
   @Column({ type: 'varchar' })
   public name: string;
 
-  @ManyToOne(
-    () => {
-      return Role;
-    },
-    (role) => {
-      return role.id;
-    },
-  )
-  role: Role;
-
-  @Column({ type: 'timestamp', nullable: true, default: null })
-  public lastLoginAt: Date | null;
+  @Column({ type: 'boolean' })
+  public status: Boolean;
 
   @CreateDateColumn({
     type: 'timestamp with time zone',

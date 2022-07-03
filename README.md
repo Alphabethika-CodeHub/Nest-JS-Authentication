@@ -24,7 +24,21 @@
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Handcrafted Nest JS using conventional Authentication, PostgreSQL and JWT.
+
+## Postman Collection
+
+https://documenter.getpostman.com/view/12229005/UzJFuxYP
+
+## Todo
+
+- Implement Social Media Auth.
+- Implement Email Verification.
+- Implement Salt/Hashing Password.
+- Best Practice Penetration Testing.
+- Best Practice Security Analysis.
+- Best Practive Clean Code.
+- Best Practice Design Pattern.
 
 ## Installation
 

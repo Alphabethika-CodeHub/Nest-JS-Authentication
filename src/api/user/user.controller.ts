@@ -7,6 +7,9 @@ import {
   Put,
   Body,
   Inject,
+  Get,
+  Param,
+  HttpStatus,
 } from '@nestjs/common';
 import { Request } from 'express';
 import { JwtAuthGuard } from '@/api/user/auth/auth.guard';
@@ -19,7 +22,27 @@ export class UserController {
   @Inject(UserService)
   private readonly service: UserService;
 
-  @Put('name')
+  @Get('/')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  private getAllUser(): Promise<object | never> {
+    return this.service.getAllUser();
+  }
+
+  @Get('/:id')
+  @UseGuards(JwtAuthGuard)
+  @UseInterceptors(ClassSerializerInterceptor)
+  private async findUser(
+    @Param() param,
+  ): Promise<{ statusCode: any; message: string; data: object }> {
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'success',
+      data: await this.service.findUser(param.id),
+    };
+  }
+
+  @Put('update')
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   private updateName(
